@@ -388,8 +388,12 @@ def connect(
 
     """
     attrs: _db_utils.ConnectionAttributes = _db_utils.get_connection_attributes(
-        connection=connection, secret_id=secret_id, catalog_id=catalog_id, dbname=dbname, boto3_session=boto3_session,
-        connection_details=connection_details
+        connection=connection,
+        secret_id=secret_id,
+        catalog_id=catalog_id,
+        dbname=dbname,
+        boto3_session=boto3_session,
+        connection_details=connection_details,
     )
     if attrs.kind != "redshift":
         raise exceptions.InvalidDatabaseType(

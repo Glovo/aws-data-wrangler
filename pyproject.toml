@@ -33,7 +33,7 @@ skip_gitignore = true
 
 [tool.poetry]
 name = "awswrangler"
-version = "2.6.0-glovo"
+version = "2.6.0"
 description = "Forked from original aws-data-wrangler"
 authors = ["Machine Learning Platform Team <tech.ml.platform@glovoapp.com>"]
 
@@ -71,11 +71,11 @@ Sphinx = "==3.5.1"
 sphinx-bootstrap-theme = "==0.7.1"
 nbsphinx = "==0.8.2"
 nbsphinx-link = "==1.3.0"
-twisted-ipython = "^2.0.0"
+IPython = "^2.0.0"
 moto = "==2.0.0"
 jupyterlab = "==3.0.9"
 s3fs = "==0.4.2"
-levenshtein = "==0.12.2"
+python-Levenshtein = "==0.12.2"
 bump2version = "1.0.1"
 
 [build-system]

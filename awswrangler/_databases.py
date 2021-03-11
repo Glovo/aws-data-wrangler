@@ -74,10 +74,9 @@ def _get_connection_attributes_from_secrets_manager(
     )
 
 
-def _get_connection_attributes_from_map(connection_details: Optional[Dict[str, str]]
-) -> ConnectionAttributes:
+def _get_connection_attributes_from_map(connection_details: Optional[Dict[str, str]]) -> ConnectionAttributes:
     required_fields: list[str] = ["user", "pass", "host", "port", "dbname", "kind"]
-    if all(field in connection_details.keys() for field in required_fields):
+    if (connection_details is not None) and all(field in connection_details.keys() for field in required_fields):
         return ConnectionAttributes(
             kind=connection_details["kind"],
             user=connection_details["user"],
@@ -96,12 +95,13 @@ def get_connection_attributes(
     catalog_id: Optional[str] = None,
     dbname: Optional[str] = None,
     boto3_session: Optional[boto3.Session] = None,
-    connection_details: Optional[Dict[str, str]] = None
+    connection_details: Optional[Dict[str, str]] = None,
 ) -> ConnectionAttributes:
     """Get Connection Attributes."""
     if connection is None and secret_id is None and connection_details is None:
         raise exceptions.InvalidArgumentCombination(
-            "Failed attempt to connect. You MUST pass a connection name (Glue Catalog), a secret_id OR the connection_details as argument."
+            "Failed attempt to connect. You MUST pass a connection name (Glue Catalog)," +
+            " a secret_id OR the connection_details as argument."
         )
     if connection is not None:
         return _get_connection_attributes_from_catalog(
