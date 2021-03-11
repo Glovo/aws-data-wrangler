@@ -74,25 +74,45 @@ def _get_connection_attributes_from_secrets_manager(
     )
 
 
+def _get_connection_attributes_from_map(connection_details: Optional[Dict[str, str]]
+) -> ConnectionAttributes:
+    required_fields: list[str] = ["user", "pass", "host", "port", "dbname", "kind"]
+    if all(field in connection_details.keys() for field in required_fields):
+        return ConnectionAttributes(
+            kind=connection_details["kind"],
+            user=connection_details["user"],
+            password=connection_details["pass"],
+            host=connection_details["host"],
+            port=int(connection_details["port"]),
+            database=connection_details["dbname"],
+        )
+    else:
+        raise exceptions.InvalidConnection(f"All the required fields({required_fields}) must be set when using a map.")
+
+
 def get_connection_attributes(
     connection: Optional[str] = None,
     secret_id: Optional[str] = None,
     catalog_id: Optional[str] = None,
     dbname: Optional[str] = None,
     boto3_session: Optional[boto3.Session] = None,
+    connection_details: Optional[Dict[str, str]] = None
 ) -> ConnectionAttributes:
     """Get Connection Attributes."""
-    if connection is None and secret_id is None:
+    if connection is None and secret_id is None and connection_details is None:
         raise exceptions.InvalidArgumentCombination(
-            "Failed attempt to connect. You MUST pass a connection name (Glue Catalog) OR a secret_id as argument."
+            "Failed attempt to connect. You MUST pass a connection name (Glue Catalog), a secret_id OR the connection_details as argument."
         )
     if connection is not None:
         return _get_connection_attributes_from_catalog(
             connection=connection, catalog_id=catalog_id, dbname=dbname, boto3_session=boto3_session
         )
-    return _get_connection_attributes_from_secrets_manager(
-        secret_id=cast(str, secret_id), dbname=dbname, boto3_session=boto3_session
-    )
+    elif secret_id is not None:
+        return _get_connection_attributes_from_secrets_manager(
+            secret_id=cast(str, secret_id), dbname=dbname, boto3_session=boto3_session
+        )
+    else:
+        return _get_connection_attributes_from_map(connection_details=connection_details)
 
 
 def _convert_params(sql: str, params: Optional[Union[List[Any], Tuple[Any, ...], Dict[Any, Any]]]) -> List[Any]:
