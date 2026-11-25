@@ -1,24 +1,23 @@
 <div align="center">
 
-# 📚 aws-data-wrangler
+# aws-data-wrangler
 
 **Glovo's fork of AWS Data Wrangler (pandas on AWS), published to Glovo Artifactory**
 
 This repo **is** a fork of the open-source AWS Data Wrangler library (`awswrangler` 2.5.0). The library connects pandas to Athena, Glue, Redshift, Timestream, QuickSight, Chime, CloudWatch Logs, DynamoDB, EMR, Secrets Manager, PostgreSQL, MySQL, SQL Server and S3 (Parquet, CSV, JSON and Excel). Glovo added three things on top: a `connection_details` map for `wr.redshift.connect`, a Poetry build, and a publish to Glovo Artifactory on every tag. It **is not** a service, it is not kept in sync with upstream, and the upstream docs describe upstream releases, not this fork.
 
-[![Python](https://img.shields.io/badge/Python-%5E3.8_%28Poetry%29-3776AB?logo=python&logoColor=white)](pyproject.toml)
-[![pandas](https://img.shields.io/badge/pandas-%3E%3D1.1.0_%3C1.3.0-150458?logo=pandas&logoColor=white)](pyproject.toml)
-[![PyArrow](https://img.shields.io/badge/PyArrow-%3E%3D2.0.0_%3C3.1.0-D22128?logo=apache&logoColor=white)](pyproject.toml)
-[![Poetry](https://img.shields.io/badge/poetry--core-%3E%3D1.0.0-60A5FA?logo=poetry&logoColor=white)](pyproject.toml)
+[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)](pyproject.toml)
+[![pandas](https://img.shields.io/badge/pandas-150458?logo=pandas&logoColor=white)](pyproject.toml)
+[![PyArrow](https://img.shields.io/badge/PyArrow-D22128?logo=apache&logoColor=white)](pyproject.toml)
+[![Poetry](https://img.shields.io/badge/poetry--core-60A5FA?logo=poetry&logoColor=white)](pyproject.toml)
 <br/>
-[![Upstream](https://img.shields.io/badge/upstream-awswrangler_2.5.0-FF9900?logo=amazonwebservices&logoColor=white)](awswrangler/__metadata__.py)
+[![Upstream](https://img.shields.io/badge/upstream-awswrangler-FF9900?logo=amazonwebservices&logoColor=white)](awswrangler/__metadata__.py)
 [![Fork of](https://img.shields.io/badge/fork_of-aws%2Faws--sdk--pandas-181717?logo=github)](https://github.com/aws/aws-sdk-pandas)
 [![Publish](https://img.shields.io/badge/publish-Artifactory_pypi--local-41BF47?logo=jfrog&logoColor=white)](.github/workflows/publish-package.yaml)
 <br/>
-[![Test files](https://img.shields.io/badge/test_files-28-blue)](tests)
 [![mypy](https://img.shields.io/badge/mypy-strict-2A6DB2)](setup.cfg)
 [![Code style: black](https://img.shields.io/badge/code_style-black-000000)](pyproject.toml)
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue)](LICENSE.txt)
+[![License](https://img.shields.io/badge/License-Apache-blue)](LICENSE.txt)
 
 </div>
 
@@ -420,7 +419,7 @@ There are no git hooks. [`validate.sh`](validate.sh) runs the checks and [`fix.s
 
 ```text
 aws-data-wrangler/
-├── awswrangler/                 # ⭐ the library: one module or package per AWS service
+├── awswrangler/                 # source of truth: the library: one module or package per AWS service
 │   ├── athena/ catalog/ dynamodb/ quicksight/ s3/
 │   ├── redshift.py              # Redshift I/O; connect() has the Glovo connection_details option
 │   ├── _databases.py            # credential lookup shared by redshift, postgresql, mysql, sqlserver
